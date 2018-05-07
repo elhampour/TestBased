@@ -1,0 +1,19 @@
+﻿body {
+    font-family: Tahoma;
+    font-size: 14px;
+    direction: rtl;
+}
+
+.k-block, .k-content, .k-dropdown .k-input, .k-popup, .k-toolbar, .k-widget {
+    /*color: #ffffff !important;*/
+}
+
+.k-content, .k-editable-area, .k-panel > li.k-item, .k-panelbar > li.k-item, .k-tiles {
+    background-color: transparent !important;
+}
+
+#mainNav .navbar-brand {
+    font-family: Tahoma;
+    font-size: 18px;
+    font-weight: bold;
+}

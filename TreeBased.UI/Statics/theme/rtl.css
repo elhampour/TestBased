@@ -1,0 +1,19 @@
+﻿@media (min-width: 992px) {
+    .content-wrapper {
+        margin-right: 150px;
+        margin-left: 0px;
+    }
+}
+body {
+    direction: rtl;
+    background: url("bg-pattern.png"), #7b4397;
+    background: url("bg-pattern.png"), -webkit-linear-gradient(to left, #7b4397, #dc2430);
+    background: url("bg-pattern.png"), linear-gradient(to left, #7b4397, #dc2430);
+}
+
+.icons {
+    float: right;
+    top: -7px;
+    margin-left: 10px;
+    margin-top: 4px;
+}

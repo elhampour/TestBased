@@ -1,0 +1,102 @@
+﻿@using Kendo.Mvc.UI
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>SB Admin - Start Bootstrap Template</title>
+
+    <link href="~/Statics/bootstrap.css" rel="stylesheet" />
+    <link href="~/Statics/theme/vendor/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/Statics/theme/css/sb-admin.css" rel="stylesheet" />
+    <link href="~/Statics/theme/rtl.css" rel="stylesheet" />
+
+    <link href="~/Statics/kendo.common.min.css" rel="stylesheet" />
+    <link href="~/Statics/kendo.default.min.css" rel="stylesheet" />
+    <link href="~/Statics/kendo.rtl.min.css" rel="stylesheet" />
+
+    <script src="~/Statics/jquery-3.3.1.min.js"></script>
+    <script src="~/Statics/theme/vendor/jquery-easing/jquery.easing.js"></script>
+    <script src="~/Statics/theme/js/sb-admin.js"></script>
+    <script src="~/Statics/kendo.all.min.js"></script>
+    <script src="~/Statics/kendo.aspnetmvc.min.js"></script>
+</head>
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNav" style="direction:rtl;">
+        <a class="navbar-brand" href="index.html"> </a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="index.html">ساختار سازمانی</a>
+                </li>
+            </ol>
+            <div class="row">
+                <div class="col-12">
+                    <div class="k-rtl demo-section k-content">
+                        @(Html.Kendo().TreeView()
+                                                            .Name("treeview")
+                                                            .DataTextField("Name")
+                                                            .TemplateId("treeview-template")
+                                                            .DataSource(dataSource => dataSource
+                                                                .Events(a => a.RequestEnd("databound"))
+                                                                .Read(read => read
+                                                                    .Action("Remote_Data_Binding_Get_Employees", "Home")
+                                                                )
+                                                            )
+                        )
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script id="treeview-template" type="text/kendo-ui-template">
+        #: item.Name #
+        # if (item.level1) { #
+        <a style="color:green;" class='fa fa-user icons' href='\#'></a>
+        # } #
+        # if (item.level2) { #
+        <a style="color:red;" class='fa fa-user icons' href='\#'></a>
+        # } #
+        # if (item.level3) { #
+        <a style="color:blue;" class='fa fa-user icons' href='\#'></a>
+        # } #
+        # if (!item.level1 && !item.level2 && !item.level3) { #
+        <a style="color:orange;" class='fa fa-user icons' href='\#'></a>
+        # } #
+    </script>
+    <script type="text/javascript">
+        function databound(e, b, c) {
+            var treeViewData = $("#treeview").data('kendoTreeView').dataSource;
+            for (var index = 0; index < e.response.length; index++) {
+                var node = treeViewData.get(e.response[index].parentCode);
+                var level = 1;
+                while (true) {
+                    if (node == undefined) {
+                        break;
+                    }
+                    node = treeViewData.get(node.parentCode);
+                    level = level + 1;
+                }
+                if (level == 1) {
+                    e.response[index].level1 = true;
+                }
+                if (level == 2) {
+                    e.response[index].level2 = true;
+                }
+                if (level == 3) {
+                    e.response[index].level3 = true;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
